@@ -1,8 +1,3 @@
----
-sdk_version: gradio
-app_file: gradio_app.py
----
-
 # Simple Face-Swap App
 
 [![CI](https://github.com/salmanalfarisi11/reface-app-simple/actions/workflows/ci.yml/badge.svg)](https://github.com/salmanalfarisi11/reface-app-simple/actions)
