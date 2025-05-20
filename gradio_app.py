@@ -1,55 +1,62 @@
 #!/usr/bin/env python3
-# gradio_app.py ── Drag&drop face-swap 128px via web UI
-
-import gradio as gr
-import cv2
-import numpy as np
-from insightface.app import FaceAnalysis
-from insightface.model_zoo.inswapper import INSwapper
-import onnxruntime as ort
+"""
+gradio_app.py — Drag-and-drop 128px face-swap web UI with Gradio
+Usage:
+    python gradio_app.py
+"""
 import os
+import numpy as np
+import cv2
+import gradio as gr
 
-# Load models once
-providers = ["CUDAExecutionProvider", "CPUExecutionProvider"]
-app = FaceAnalysis(name="buffalo_l", providers=providers)
-app.prepare(ctx_id=0, det_size=(640, 640))
-model_path = os.path.expanduser("~/.insightface/models/inswapper_128.onnx")
-session = ort.InferenceSession(model_path, providers=providers)
-swapper = INSwapper(model_file=model_path, session=session)
+def get_models():
+    # heavy imports deferred here
+    import onnxruntime as ort
+    from insightface.app import FaceAnalysis
+    from insightface.model_zoo.inswapper import INSwapper
 
+    providers = ["CUDAExecutionProvider","CPUExecutionProvider"]
+    app = FaceAnalysis(name="buffalo_l", providers=providers)
+    app.prepare(ctx_id=0, det_size=(640,640))
+
+    model_path = os.path.expanduser("~/.insightface/models/inswapper_128.onnx")
+    if not os.path.isfile(model_path):
+        raise FileNotFoundError(f"Model not found: {model_path}")
+    session = ort.InferenceSession(model_path, providers=providers)
+    swapper = INSwapper(model_file=model_path, session=session)
+
+    return app, swapper
 
 def swap_fn(src, dst):
-    # src/dst = PIL images → convert ke OpenCV BGR
+    app, swapper = get_models()
+
+    # convert PIL→BGR
     src_img = cv2.cvtColor(np.array(src), cv2.COLOR_RGB2BGR)
     dst_img = cv2.cvtColor(np.array(dst), cv2.COLOR_RGB2BGR)
 
     fs, fd = app.get(src_img), app.get(dst_img)
     if not fs or not fd:
-        return None, "Face not detected in one of the images."
+        return None, "❌ Face not detected in one of the images."
 
     res = swapper.get(dst_img, fd[0], fs[0], paste_back=True)
-    # convert kembali ke RGB PIL
+    # convert BGR→RGB for display
     out = cv2.cvtColor(res, cv2.COLOR_BGR2RGB)
     return out, "✅ Success"
 
-
-# Gradio Interface
-title = "🖼 Simple Face-Swap 128px"
-descr = "Upload **Source** + **Target**, pilih CPU/GPU, lalu klik **RUN**"
 iface = gr.Interface(
     fn=swap_fn,
     inputs=[
-        gr.Image(type="pil", label="Source (you)"),
-        gr.Image(type="pil", label="Target"),
+        gr.Image(type="pil",   label="Source (your face)"),
+        gr.Image(type="pil",   label="Target (celebrity)")
     ],
     outputs=[
-        gr.Image(type="numpy", label="Swapped Result"),
-        gr.Textbox(label="Status"),
+        gr.Image(type="numpy", label="Swapped"),
+        gr.Textbox(label="Status")
     ],
-    title=title,
-    description=descr,
+    title="Simple 128px Face-Swap",
+    description="Upload two images and get a face-swapped result.",
     allow_flagging="never",
-    live=False,
+    live=False
 )
 
 if __name__ == "__main__":
