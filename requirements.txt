@@ -1,5 +1,5 @@
 torch>=2.2.0
 opencv-python
 insightface==0.7.3
-onnxruntime-gpu
+onnxruntime-gpu  #for cpu only use onnxruntime
 gradio                 # <— UI dependency
