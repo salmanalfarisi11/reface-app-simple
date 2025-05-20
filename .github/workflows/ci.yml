@@ -33,6 +33,6 @@ jobs:
       - name: Smoke test imports
         run: |
           python - <<'PY'
-          import swap_128, gradio_app
+          import swap, gradio_app
           print("✅ Imports OK")
           PY
