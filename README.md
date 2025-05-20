@@ -7,7 +7,8 @@ app_file: gradio_app.py
 
 [![CI](https://github.com/salmanalfarisi11/reface-app-simple/actions/workflows/ci.yml/badge.svg)](https://github.com/salmanalfarisi11/reface-app-simple/actions)
 [![Live Demo](https://img.shields.io/badge/demo-Hugging%20Face-blue)](https://huggingface.co/spaces/salman555/reface-app-simple)
-> A high-performance, 128 px face-swap prototype built with ONNX & GPU acceleration, designed for AI practitioners and developers.
+> A high-performance 128px face-swap prototype built with ONNX.
+Supports both GPU and CPU execution, designed for AI practitioners and developers.
 
 ---
 
@@ -16,7 +17,7 @@ app_file: gradio_app.py
 This repository provides a streamlined pipeline for swapping faces in still images using a 128×128 px ONNX model and the InsightFace framework. The design prioritizes:
 
 - **Accuracy**: Leveraging InsightFace’s state-of-the-art face detector and embedding model.  
-- **Performance**: Native ONNXRuntime GPU support for real-time inference.  
+- **Performance**: Native ONNXRuntime GPU/CPU support for real-time inference.  
 - **Usability**: Simple CLI and web UI via Gradio for drag-and-drop interaction.  
 
 ---
@@ -62,14 +63,14 @@ This repository provides a streamlined pipeline for swapping faces in still imag
 4. **Download ONNX model**
    ```bash
    mkdir -p ~/.insightface/models
-   wget -O ~/.insightface/models/inswapper_128.onnx \ https://github.com/deepinsight/insightface/releases/download/v0.7/inswapper_128.onnx
+   wget -O ~/.insightface/models/inswapper_128.onnx \ https://huggingface.co/ezioruan/inswapper_128.onnx/resolve/main/inswapper_128.onnx
    ```
 
 ## ⚙️ Usage
 
 ### Command-Line
 ```bash
-python swap_128.py \
+python swap.py \
   --src path/to/your_photo.jpg \
   --dst path/to/target.jpg \
   --out result.png \
