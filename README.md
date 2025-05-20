@@ -1,5 +1,12 @@
+---
+sdk_version: gradio
+app_file: app.py
+---
+
 # Simple Face-Swap App
 
+[![CI](https://github.com/salmanalfarisi11/reface-app-simple/actions/workflows/ci.yml/badge.svg)](https://github.com/salmanalfarisi11/reface-app-simple/actions)
+[![Live Demo](https://img.shields.io/badge/demo-Hugging%20Face-blue)](https://huggingface.co/spaces/salman555/reface-app-simple)
 > A high-performance, 128 px face-swap prototype built with ONNX & GPU acceleration, designed for AI practitioners and developers.
 
 ---
@@ -37,7 +44,7 @@ This repository provides a streamlined pipeline for swapping faces in still imag
 
 1. **Clone & enter** the project directory  
    ```bash
-   git clone https://github.com/username/reface-app-simple.git
+   git clone https://github.com/salmanalfarisi11/reface-app-simple.git
    cd reface-app-simple
    ```
 
