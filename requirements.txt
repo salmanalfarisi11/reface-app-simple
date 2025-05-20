@@ -1,0 +1,5 @@
+torch>=2.2.0
+opencv-python
+insightface==0.7.3
+onnxruntime-gpu
+gradio                 # <— UI dependency

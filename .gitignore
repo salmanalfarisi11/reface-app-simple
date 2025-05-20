@@ -1,0 +1,29 @@
+# Cache Python
+__pycache__/
+*.py[cod]
+
+# Virtual env
+.venv/
+venv/
+env/
+
+# Editor settings
+.vscode/
+.idea/
+
+# macOS
+.DS_Store
+
+# Env files
+.env
+
+# Model weights & checkpoints
+*.onnx
+*.pth
+*.ckpt
+
+# Log & hasil swap
+*.log
+swapped*.png
+hd_*.png
+
