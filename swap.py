@@ -8,7 +8,10 @@ Usage:
       --out result.png \
       --device cpu|gpu
 """
-import argparse, os, sys, cv2
+import argparse
+import os
+import sys
+import cv2
 import onnxruntime as ort
 from insightface.app import FaceAnalysis
 from insightface.model_zoo.inswapper import INSwapper
