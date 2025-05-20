@@ -20,11 +20,14 @@ def swap_faces(
     from insightface.app import FaceAnalysis
     from insightface.model_zoo.inswapper import INSwapper
 
-    providers = ["CUDAExecutionProvider"] if device == "gpu" else ["CPUExecutionProvider"]
+    providers = ["CUDAExecutionProvider"] if device == "gpu" else [
+        "CPUExecutionProvider"
+    ]
 
     app = FaceAnalysis(name="buffalo_l", providers=providers)
     app.prepare(ctx_id=0 if device == "gpu" else -1, det_size=(640, 640))
 
+    # path to the ONNX model
     model_path = os.path.expanduser(
         "~/.insightface/models/inswapper_128.onnx"
     )
@@ -52,7 +55,10 @@ def swap_faces(
     )
 
     ext = os.path.splitext(out_path)[1].lower()
-    params = [cv2.IMWRITE_JPEG_QUALITY, 100] if ext in (".jpg", ".jpeg") else []
+    params = [cv2.IMWRITE_JPEG_QUALITY, 100] if ext in (
+        ".jpg",
+        ".jpeg",
+    ) else []
 
     cv2.imwrite(out_path, result, params)
     print(f"✅ Swap complete → {out_path}")

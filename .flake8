@@ -1,0 +1,11 @@
+[flake8]
+max-line-length = 88
+
+# Directories and files to skip
+exclude =
+    .venv,
+    venv,
+    env,
+    __pycache__,
+    .git,
+    .github
