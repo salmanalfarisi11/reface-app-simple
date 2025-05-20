@@ -1,6 +1,6 @@
 ---
 sdk_version: gradio
-app_file: app.py
+app_file: gradio_app.py
 ---
 
 # Simple Face-Swap App
